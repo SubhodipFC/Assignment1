@@ -1,0 +1,35 @@
+{
+	"chart": {
+		"caption": "Monthly revenue for last year",
+		"subCaption": "Harry's SuperMart",
+		"xAxisName": "Month",
+		"yAxisName": ["Customer Happiness","Sales","No of Employees"],
+		"theme": "fint"
+		},
+
+	"data":[
+		{
+		"label":"Jan",
+		"value":["0.21","3500","100"]
+		},
+		{
+		"label":"Feb",
+		"value":["0.25","2200","260"]
+		},
+		{
+		"label":"Mar",
+		"value":["0.3","2500","200"]
+		},
+		{
+		"label":"Apr",
+		"value":["0.32","2700","290"]
+		},
+		{
+		"label":"May",
+		"value":["0.37","1900","240"]
+		},
+		{
+		"label":"Jun",
+		"value":["0.39","1500","350"]
+		}]
+}
