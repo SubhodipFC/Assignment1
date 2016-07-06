@@ -1,0 +1,74 @@
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <head>
+      <title>The jQuery Example</title>
+  </head>
+	
+  <body>
+  <script type="text/javascript">
+  var xmlhttp,jd,time=[],chartdata=[],range=[];
+  xmlhttp= new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+  	var min,max,i,j,data,val;
+  	if(xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200 ) {
+  		jd = JSON.parse(xmlhttp.responseText);
+  		//console.log(jd);
+  		//console.log(jd.data[0].label);
+  		for(j=0;j<jd.chart.yAxisName.length;j++){
+          data=[]; min=jd.data[0].value[j]; max=min;
+          for(i=0;i<jd.data.length;i++){
+            val=jd.data[i].value[j];
+            if(val<min)min=val;
+            else if(val>max)max=val;
+
+            data.push(val);
+          }
+          chartdata.push(data);
+          range.push([min,max]);
+        }
+        for(i=0;i<jd.data.length;i++){
+        	time.push(jd.data[i].label);
+        }
+        console.log(chartdata[0]+" Data Range: "+range[0]+" Chart Range: "+YAxisRange(0));
+        console.log(chartdata[1]+" Data Range: "+range[1]+" Chart Range: "+YAxisRange(1));
+        console.log(chartdata[2]+" Data Range: "+range[2]+" Chart Range: "+YAxisRange(2));
+        console.log("XAxis: "+time);
+  	}
+  };
+  xmlhttp.open('GET','chartdata.json',true);
+  xmlhttp.send();
+  function YAxisRange(chart_i){
+  	var i,j,pi=0,pj=0,min,max,ceil,floor;
+  	min=Number(range[chart_i][0]);
+  	max=Number(range[chart_i][1]);
+  	for(;min>=10;pi--)min=min/10;
+  	for(;min<1;pi++)min=min*10;
+  	for(;max>=10;pj--)max=max/10;
+  	for(;max<1;pj++)max=max*10;
+  	min-=0.5; max+=0.5;
+  	max=Math.ceil(max);
+  	min=Math.floor(min);
+  	for(;pi<0;pi++)min*=10;
+  	for(;pi>0;pi--)min/=10;
+  	for(;pj<0;pj++)max*=10;
+  	for(;pj>0;pj--)max/=10;
+  	return [min,max];
+  }
+  </script>
+  <svg height="1000" width="1000">
+  <line x1="50" y1="50" x2="50" y2="250" style="stroke:rgb(0,0,0);stroke-width:2" />
+  <svg height="1000" width="1000">
+  <text x="0" y="20" fill="black" 
+  transform="rotate(270 80,80)">Customer Happiness</text>
+  </svg>
+  <line x1="50" y1="250" x2="250" y2="250" style="stroke:rgb(0,0,0);stroke-width:2" />
+
+  <line x1="50" y1="275" x2="50" y2="475" style="stroke:rgb(0,0,0);stroke-width:2" />
+  <line x1="50" y1="475" x2="250" y2="475" style="stroke:rgb(0,0,0);stroke-width:2" />
+
+  <line x1="50" y1="500" x2="50" y2="700" style="stroke:rgb(0,0,0);stroke-width:2" />
+  <line x1="50" y1="700" x2="250" y2="700" style="stroke:rgb(0,0,0);stroke-width:2" />
+  </svg>
+</body>
+</html>
